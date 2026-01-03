@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-// Importation des fichiers des autres membres
-// Import 'home.dart';
-//Import 'foodlog.dart';
-// Import 'scanner.dart';
-//Import 'analytics.dart';
-//Import 'profil.dart';
+
+// 1. IMPORTATION DES FICHIERS DES MEMBRES
+import 'food_log_screen.dart'; 
+import 'analytics.dart'; 
 
 void main() => runApp(const DietApp());
 
@@ -38,13 +36,13 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  // Emplacements pour les pages des Membres B, C et D
+  // 2. MISE À JOUR DES PAGES (On remplace les textes par tes classes)
   final List<Widget> _pages = [
-    const Center(child: Text("Home")),
-    const Center(child: Text("Food Log")),
-    const Center(child: Text("Scanner")),
-    const Center(child: Text("Analytics")),
-    const Center(child: Text("Profile")),
+    const Center(child: Text("Home")),      // Page Membre B
+    const FoodLogScreen(),                  // TA PAGE : Food Log
+    const Center(child: Text("Scanner")),   // Page Membre C
+    const AnalyticsScreen(),                // TA PAGE : Analytics
+    const Center(child: Text("Profile")),   // Page Profil
   ];
 
   @override
@@ -63,11 +61,8 @@ class _MainNavigationState extends State<MainNavigation> {
             (icon: Icon(Icons.document_scanner_outlined, size: 30), label: 'Scanner'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart_outlined), label: 'Analytics'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
-         
         ],
       ),
     );
   }
 }
-
-  
