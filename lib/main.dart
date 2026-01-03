@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //Import 'foodlog.dart';
 // Import 'scanner.dart';
 //Import 'analytics.dart';
-//Import 'profil.dart';
+import 'profile.dart';
 
 void main() => runApp(const DietApp());
 
@@ -17,7 +17,7 @@ class DietApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        // Ton rôle : Définir l'orange officiel pour tout le groupe
+        // Rôle : Définition de l'orange officiel pour tout le groupe
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFFF6B00),
           primary: const Color(0xFFFF6B00),
@@ -44,7 +44,7 @@ class _MainNavigationState extends State<MainNavigation> {
     const Center(child: Text("Food Log")),
     const Center(child: Text("Scanner")),
     const Center(child: Text("Analytics")),
-    const Center(child: Text("Profile")),
+    const ProfilPage(),
   ];
 
   @override
@@ -63,7 +63,6 @@ class _MainNavigationState extends State<MainNavigation> {
             (icon: Icon(Icons.document_scanner_outlined, size: 30), label: 'Scanner'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart_outlined), label: 'Analytics'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
-         
         ],
       ),
     );
