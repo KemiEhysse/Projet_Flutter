@@ -17,113 +17,109 @@ class _PageHomeState extends State<PageHome> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
 
-              
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Good Morning, User",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  Row(
-                    children: const [
-                      Icon(Icons.notifications_outlined),
-                      SizedBox(width: 12),
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.grey,
-                      )
-                    ],
-                  )
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              /// pour aligner today, weekly et monthly
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _tabButton("Today"),
-                  _tabButton("Weekly"),
-                  _tabButton("Monthly"),
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              
-              if (selectedTab == "Today") ...[
-                const Text(
-                  "Calories",
-                  style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-
-                const SizedBox(height: 12),
-
-                Center(
-                  child: DailyChart(
-                    consumed: 980,
-                    target: 2200,
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                /// Contenu de losing weight goal
-                const Text(
-                  "Losing Weight Goal",
-                  style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-
-                const SizedBox(height: 16),
+          // on rend possible le scrollage
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    _GoalWidget(
-                      title: "Goal Weight",
-                      value: 60,
-                      target: 75,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Good Morning, User",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    _GoalWidget(
-                      title: "Goal Rate",
-                      value: 1.2,
-                      target: 2.0,
-                    ),
+
+                    Row(
+                      children: const [
+                        Icon(Icons.notifications_outlined),
+                        SizedBox(width: 12),
+                        CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Colors.grey,
+                        )
+                      ],
+                    )
                   ],
                 ),
-              ]
-              else ...[
-                
-                Expanded(
-                  child: Center(
+
+                const SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _tabButton("Today"),
+                    _tabButton("Weekly"),
+                    _tabButton("Monthly"),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                if (selectedTab == "Today") ...[
+                  const Text(
+                    "Calories",
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  Center(
+                    child: DailyChart(
+                      consumed: 980,
+                      target: 2200,
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  const Text(
+                    "Losing Weight Goal",
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      _GoalWidget(
+                        title: "Goal Weight",
+                        value: 60,
+                        target: 75,
+                      ),
+                      _GoalWidget(
+                        title: "Goal Rate",
+                        value: 1.2,
+                        target: 2.0,
+                      ),
+                    ],
+                  ),
+                ]
+                else ...[
+                  Center(
                     child: Text(
                       "$selectedTab View",
                       style: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                )
-              ]
-            ],
+                  )
+                ]
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  /// Les sections weekly et monthly
   Widget _tabButton(String label) {
     final bool active = selectedTab == label;
 
@@ -146,7 +142,6 @@ class _PageHomeState extends State<PageHome> {
   }
 }
 
-/// La section des goal 
 class _GoalWidget extends StatelessWidget {
   final String title;
   final double value;
