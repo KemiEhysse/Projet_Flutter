@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // Importation des fichiers des autres membres
 // Import 'home.dart';
 //Import 'foodlog.dart';
 // Import 'scanner.dart';
 //Import 'analytics.dart';
+import 'providers/food_provider.dart';
 import 'profile.dart';
 
-void main() => runApp(const DietApp());
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => FoodProvider(),
+      child: const DietApp(),
+    ),
+  ); 
+}
+  
 
 class DietApp extends StatelessWidget {
   const DietApp({super.key});
