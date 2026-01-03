@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/food_provider.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final totalCalories = context.watch<FoodProvider>().totalCalories;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mon Profil"),
@@ -30,7 +34,18 @@ class ProfilPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          
+
+          //Calories en temps reel
+          Text("Objectifs du jour", style: TextStyle(fontWeight: FontWeight.bold, color:  Colors.grey)),
+          ListTile(
+            leading: const Icon(Icons.height, color: Color(0xFFFF6B00)),
+            title: const Text("Calories consommées"),
+            trailing: Text("$totalCalories kcal",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18), 
+            ),
+          ),
+          const Divider(),
+
           // Section Informations
           const Text("Mes informations physiques", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
           const ListTile(
