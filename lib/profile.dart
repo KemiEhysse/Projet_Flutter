@@ -43,7 +43,7 @@ class ProfilPage extends StatelessWidget {
             trailing: Text("$totalCalories kcal",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18), 
             ),
-          ),
+          ),                
           const Divider(),
 
           // Section Informations
