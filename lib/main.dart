@@ -41,7 +41,7 @@ class _MainNavigationState extends State<MainNavigation> {
   // Emplacements pour les pages des Membres B, C et D
   final List<Widget> _pages = [
     const Center(child: Text("Home")),
-     const Center(child: Text("Food Log")),
+    const Center(child: Text("Food Log")),
     const Center(child: Text("Scanner")),
     const Center(child: Text("Analytics")),
     const Center(child: Text("Profile")),
@@ -52,6 +52,7 @@ class _MainNavigationState extends State<MainNavigation> {
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xFFFF6B00),
         onTap: (index) => setState(() => _selectedIndex = index),
