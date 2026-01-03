@@ -1,18 +1,77 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+// Importation des fichiers des autres membres
+// Import 'home.dart';
+//Import 'foodlog.dart';
+// Import 'scanner.dart';
+//Import 'analytics.dart';
+//Import 'profil.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+void main() => runApp(const DietApp());
+
+class DietApp extends StatelessWidget {
+  const DietApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const PageHome(),
+      theme: ThemeData(
+        useMaterial3: true,
+        // Ton rôle : Définir l'orange officiel pour tout le groupe
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFFF6B00),
+          primary: const Color(0xFFFF6B00),
+        ),
+      ),
+      home: const MainNavigation(),
     );
   }
 }
+
+class MainNavigation extends StatefulWidget {
+  const MainNavigation({super.key});
+
+  @override
+  State<MainNavigation> createState() => _MainNavigationState();
+}
+
+class _MainNavigationState extends State<MainNavigation> {
+  int _selectedIndex = 0;
+
+  // Emplacements pour les pages des Membres B, C et D
+  final List<Widget> _pages = [
+    const PageHome(),
+    const Center(child: Text("Food Log")),
+    const Center(child: Text("Scanner")),
+    const Center(child: Text("Analytics")),
+    const Center(child: Text("Profile")),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(index: _selectedIndex, children: _pages),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        selectedItemColor: const Color(0xFFFF6B00),
+        onTap: (index) => setState(() => _selectedIndex = index),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.history_outlined), label: 'Food Log'),
+          BottomNavigationBarItem
+            (icon: Icon(Icons.document_scanner_outlined, size: 30), label: 'Scanner'),
+          BottomNavigationBarItem(icon: Icon(Icons.bar_chart_outlined), label: 'Analytics'),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+         
+        ],
+      ),
+
+    );
+  }
+}
+
+  
