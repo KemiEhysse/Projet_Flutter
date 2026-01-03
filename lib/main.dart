@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // Importation des fichiers des autres membres
-// Import 'home.dart';
+import 'home_screen.dart';
 //Import 'foodlog.dart';
 // Import 'scanner.dart';
 //Import 'analytics.dart';
 import 'providers/food_provider.dart';
 import 'profile.dart';
+
 
 void main() {
   runApp(
@@ -50,7 +51,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   // Emplacements pour les pages des Membres B, C et D
   final List<Widget> _pages = [
-    const Center(child: Text("Home")),
+    const PageHome(),
     const Center(child: Text("Food Log")),
     const Center(child: Text("Scanner")),
     const Center(child: Text("Analytics")),
@@ -75,6 +76,7 @@ class _MainNavigationState extends State<MainNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
       ),
+
     );
   }
 }
