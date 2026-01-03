@@ -5,7 +5,7 @@ class DailyChart extends StatelessWidget {
   final double target;   // objectif calories
 
  const DailyChart({
-    super.key, // ← super-parameter, plus besoin de le redéclarer
+    super.key, 
     required this.consumed,
     required this.target,
   });
