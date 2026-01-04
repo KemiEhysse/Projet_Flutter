@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet_flutter/scanner.dart';
 // Importation des fichiers des autres membres
 // Import 'home.dart';
 //Import 'foodlog.dart';
@@ -42,7 +43,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _pages = [
     const Center(child: Text("Home")),
     const Center(child: Text("Food Log")),
-    const Center(child: Text("Scanner")),
+    const ScannerScreen(),
     const Center(child: Text("Analytics")),
     const Center(child: Text("Profile")),
   ];
