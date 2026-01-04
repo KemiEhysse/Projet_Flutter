@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
-// Importation des fichiers des autres membres
-// Import 'home.dart';
-//Import 'foodlog.dart';
-// Import 'scanner.dart';
-//Import 'analytics.dart';
-//Import 'profil.dart';
+import 'package:provider/provider.dart';
+import 'home_screen.dart';
+import 'food_log_screen.dart';
+import 'package:projet_flutter/scanner.dart';
+import 'analytics.dart';
+import 'profile.dart';
+import 'providers/food_provider.dart';
 
-void main() => runApp(const DietApp());
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => FoodProvider(),
+      child: const DietApp(),
+    ),
+  ); 
+}
+  
 
 class DietApp extends StatelessWidget {
   const DietApp({super.key});
@@ -17,7 +26,7 @@ class DietApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        // Ton rôle : Définir l'orange officiel pour tout le groupe
+        // Rôle : Définition de l'orange officiel pour tout le groupe
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFFF6B00),
           primary: const Color(0xFFFF6B00),
@@ -38,13 +47,13 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  // Emplacements pour les pages des Membres B, C et D
+  // 2. MISE À JOUR DES PAGES (On remplace les textes par tes classes)
   final List<Widget> _pages = [
-    const Center(child: Text("Home")),
-    const Center(child: Text("Food Log")),
-    const Center(child: Text("Scanner")),
-    const Center(child: Text("Analytics")),
-    const Center(child: Text("Profile")),
+    const PageHome(),
+    const FoodLogScreen(),
+    const ScannerScreen(),
+    const AnalyticsScreen(),
+    const ProfilPage(),
   ];
 
   @override
@@ -63,11 +72,9 @@ class _MainNavigationState extends State<MainNavigation> {
             (icon: Icon(Icons.document_scanner_outlined, size: 30), label: 'Scanner'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart_outlined), label: 'Analytics'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
-         
         ],
       ),
+
     );
   }
 }
-
-  
