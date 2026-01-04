@@ -73,7 +73,7 @@ class AnalyticsScreen extends StatelessWidget {
           width: 30,
           height: 140 * percent, // Hauteur proportionnelle
           decoration: BoxDecoration(
-            color: day == "Thu" ? Colors.orange : Colors.orange.withOpacity(0.2),
+            color: day == "Thu" ? Colors.orange : Colors.orange.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(8),
           ),
         ),

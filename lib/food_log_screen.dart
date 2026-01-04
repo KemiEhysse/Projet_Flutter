@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/food_provider.dart';
+import '../models/meal.dart'; 
+
 
 class FoodLogScreen extends StatelessWidget {
   const FoodLogScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    List<String> days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    String formattedDate = "${days[now.weekday - 1]}, ${now.day}";
+
+
+    final foodProvider = context.watch<FoodProvider>();
+
     return Scaffold(
       backgroundColor: const Color(0xFFFBFBFB),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: const Icon(Icons.menu, color: Colors.black),
-        title: const Text("Thu, 13 August", 
+        title: Text(
+          formattedDate,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
         centerTitle: true,
         actions: [
@@ -20,28 +33,40 @@ class FoodLogScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          _buildCalendarHeader(),
+          _buildCalendarHeader(now),
           const Divider(height: 1, color: Color(0xFFEEEEEE)),
 
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               children: [
-                // Exemple d'heure vide avec bouton +
-                _buildEmptyTimeSlot("7 AM"),
+                // 1. Créneau vide pour tester l'ajout
+                _buildEmptyTimeSlot("7 AM", context),
                 
-                // Un repas enregistré
-                _buildMealRow("8:15", "Green Burst Poached Egg", "315", "24g", "16g", "14g"),
-                
-                _buildEmptyTimeSlot("9 AM"),
-                _buildEmptyTimeSlot("10 AM"),
+                // 2. BOUCLE DYNAMIQUE : On affiche chaque repas stocké dans le Provider
+                if (foodProvider.meals.isEmpty)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text("Aucun repas enregistré pour le moment", 
+                        style: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic)),
+                    ),
+                  )
+                else
+                  ...foodProvider.meals.map((meal) => 
+                    _buildMealRow(
+                      "Now", 
+                      meal.name, 
+                      meal.calories.toString(), 
+                      "${meal.proteins.toStringAsFixed(0)}g", 
+                      "${meal.carbs.toStringAsFixed(0)}g", 
+                      "${meal.fats.toStringAsFixed(0)}g"
+                    )
+                  ),
 
-                // Deuxième repas enregistré
-                _buildMealRow("10:08", "Berry Crunch Morning Set", "362", "12g", "55g", "11g"),
-                
-                _buildMealRow("10:31", "Golden Caramel Custard", "268", "9g", "38g", "10g"),
-
-                _buildEmptyTimeSlot("11 AM"),
+                // 3. Autres créneaux vides pour le design
+                _buildEmptyTimeSlot("9 AM", context),
+                _buildEmptyTimeSlot("11 AM", context),
               ],
             ),
           ),
@@ -50,10 +75,35 @@ class FoodLogScreen extends StatelessWidget {
     );
   }
 
-  // --- LES COMPOSANTS (WIDGETS) ---
 
-  // 1. Ligne pour une heure vide avec le petit +
-  Widget _buildEmptyTimeSlot(String time) {
+  Widget _buildCalendarHeader(DateTime today) {
+    List<String> daysName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    return Container(
+      height: 80,
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: List.generate(7, (index) {
+          // Calcule les jours de la semaine (Lundi à Dimanche)
+          DateTime firstDayOfWeek = today.subtract(Duration(days: today.weekday - 1));
+          DateTime dayDate = firstDayOfWeek.add(Duration(days: index));
+          
+          bool isSelected = dayDate.day == today.day;
+
+          return _dateTile(
+            dayDate.day.toString(), 
+            daysName[dayDate.weekday - 1], 
+            isSelected: isSelected
+          );
+        }),
+      ),
+    );
+  }
+
+  // --- COMPOSANTS ADAPTÉS À TON PROVIDER ---
+
+  Widget _buildEmptyTimeSlot(String time, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -64,18 +114,31 @@ class FoodLogScreen extends StatelessWidget {
           ),
           const Expanded(child: Divider(color: Color(0xFFF0F0F0))),
           const SizedBox(width: 10),
-          const Icon(Icons.add, color: Colors.grey, size: 20),
+          // INTERACTION : On utilise ta méthode addMeal
+          GestureDetector(
+            onTap: () {
+              context.read<FoodProvider>().addMeal(
+                Meal(
+                  name: "Nouveau repas", 
+                  calories: 200, 
+                  proteins: 15,
+                  carbs: 25,
+                  fats: 8,
+                  time: "Déjeuner",
+                ),
+              );
+            },
+            child: const Icon(Icons.add, color: Colors.orange, size: 20),
+          ),
         ],
       ),
     );
   }
 
-  // 2. Ligne avec un repas (Carte)
   Widget _buildMealRow(String time, String title, String kcal, String p, String c, String f) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Heure
         SizedBox(
           width: 45,
           child: Padding(
@@ -83,7 +146,6 @@ class FoodLogScreen extends StatelessWidget {
             child: Text(time, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
           ),
         ),
-        // Carte du repas
         Expanded(
           child: Container(
             margin: const EdgeInsets.only(bottom: 15),
@@ -92,12 +154,11 @@ class FoodLogScreen extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4)),
               ],
             ),
             child: Row(
               children: [
-                // Placeholder pour l'image (Rôle du Membre C)
                 Container(
                   width: 50, height: 50,
                   decoration: BoxDecoration(
@@ -140,25 +201,6 @@ class FoodLogScreen extends StatelessWidget {
           Icon(Icons.circle, size: 6, color: col),
           const SizedBox(width: 4),
           Text(val, style: const TextStyle(fontSize: 10, color: Colors.grey)),
-        ],
-      ),
-    );
-  }
-
-  // Calendrier horizontal (simplifié)
-  Widget _buildCalendarHeader() {
-    return Container(
-      height: 80,
-      color: Colors.white,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          _dateTile("09", "Sun"),
-          _dateTile("10", "Mon"),
-          _dateTile("11", "Tue"),
-          _dateTile("12", "Wed"),
-          _dateTile("13", "Thu", isSelected: true),
-          _dateTile("14", "Fri"),
         ],
       ),
     );
