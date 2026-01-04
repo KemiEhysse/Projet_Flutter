@@ -81,23 +81,31 @@ class FoodLogScreen extends StatelessWidget {
 
     return Container(
       height: 80,
+      width: double.infinity,
       color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(7, (index) {
-          // Calcule les jours de la semaine (Lundi à Dimanche)
-          DateTime firstDayOfWeek = today.subtract(Duration(days: today.weekday - 1));
-          DateTime dayDate = firstDayOfWeek.add(Duration(days: index));
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(7, (index) {
+             // Calcule les jours de la semaine (Lundi à Dimanche)
+              DateTime firstDayOfWeek = today.subtract(Duration(days: today.weekday - 1));
+              DateTime dayDate = firstDayOfWeek.add(Duration(days: index));
           
-          bool isSelected = dayDate.day == today.day;
+              bool isSelected = dayDate.day == today.day;
 
-          return _dateTile(
-            dayDate.day.toString(), 
-            daysName[dayDate.weekday - 1], 
-            isSelected: isSelected
-          );
-        }),
-      ),
+              return _dateTile(
+                dayDate.day.toString(), 
+                daysName[dayDate.weekday - 1], 
+                isSelected: isSelected
+              );
+            }),
+          ),
+        ),
+      ), 
     );
   }
 
