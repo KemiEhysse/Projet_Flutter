@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class DailyChart extends StatelessWidget {
   final double consumed; // calories consommées
   final double target;   // objectif calories
+  final double proteins;
+  final double carbs;
+  final double fats;
 
  const DailyChart({
     super.key, // ← super-parameter, plus besoin de le redéclarer
     required this.consumed,
     required this.target,
+    required this.proteins,
+    required this.carbs,
+    required this.fats,
   });
 
   @override
@@ -50,15 +56,15 @@ class DailyChart extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 15),
 
         // Lignes graphiques Proteins / Carbs / Fat (fake pour l'instant oh)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            _MacroStat(label: "Protein", value: "68/100g", color: Colors.blue),
-            _MacroStat(label: "Carbs", value: "145/250g", color: Colors.orange),
-            _MacroStat(label: "Fat", value: "52/67g", color: Colors.green),
+          children: [
+            _MacroStat(label: "Protein", value: "${proteins.toStringAsFixed(0)}/100g", color: Colors.blue),
+            _MacroStat(label: "Carbs", value: "${carbs.toStringAsFixed(0)}/250g", color: Colors.orange),
+            _MacroStat(label: "Fat", value: "${fats.toStringAsFixed(0)}/67g", color: Colors.green),
           ],
         ),
       ],
@@ -82,7 +88,7 @@ class _MacroStat extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 40,
+          width: 45,
           height: 6,
           decoration: BoxDecoration(
             color: color,

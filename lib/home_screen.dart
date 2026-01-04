@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'widgets/daily_chart.dart';
+import 'package:provider/provider.dart';
+import 'providers/food_provider.dart';
+
 
 class PageHome extends StatefulWidget {
   const PageHome({super.key});
@@ -13,6 +16,8 @@ class _PageHomeState extends State<PageHome> {
 
   @override
   Widget build(BuildContext context) {
+    final foodProvider = context.watch<FoodProvider>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -72,8 +77,11 @@ class _PageHomeState extends State<PageHome> {
 
                 Center(
                   child: DailyChart(
-                    consumed: 980,
+                    consumed: foodProvider.totalCalories.toDouble(),
                     target: 2200,
+                    proteins: foodProvider.totalProteins,
+                    carbs: foodProvider.totalCarbs,
+                    fats: foodProvider.totalFats,
                   ),
                 ),
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// Importation des fichiers des autres membres
 import 'home_screen.dart';
 //Import 'foodlog.dart';
 // Import 'scanner.dart';
