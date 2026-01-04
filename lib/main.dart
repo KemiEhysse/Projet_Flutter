@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_screen.dart';
 import 'food_log_screen.dart';
-// Import 'scanner.dart';
+import 'scanner_screen.dart';
 import 'analytics.dart';
 import 'profile.dart';
 import 'providers/food_provider.dart';
@@ -51,7 +51,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _pages = [
     const PageHome(),
     const FoodLogScreen(),
-    const Center(child: Text("Scanner")),
+    const ScannerScreen(),
     const AnalyticsScreen(),
     const ProfilPage(),
   ];
