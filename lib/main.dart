@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_screen.dart';
-//Import 'foodlog.dart';
+import 'food_log_screen.dart';
 // Import 'scanner.dart';
-//Import 'analytics.dart';
-import 'providers/food_provider.dart';
+import 'analytics.dart';
 import 'profile.dart';
-
+import 'providers/food_provider.dart';
 
 void main() {
   runApp(
@@ -48,12 +47,12 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  // Emplacements pour les pages des Membres B, C et D
+  // 2. MISE À JOUR DES PAGES (On remplace les textes par tes classes)
   final List<Widget> _pages = [
     const PageHome(),
-    const Center(child: Text("Food Log")),
+    const FoodLogScreen(),
     const Center(child: Text("Scanner")),
-    const Center(child: Text("Analytics")),
+    const AnalyticsScreen(),
     const ProfilPage(),
   ];
 
@@ -79,5 +78,3 @@ class _MainNavigationState extends State<MainNavigation> {
     );
   }
 }
-
-  
