@@ -129,11 +129,14 @@ class FoodLogScreen extends StatelessWidget {
                 Meal(
                   name: "Nouveau repas", 
                   calories: 200, 
-                  proteins: 15,
-                  carbs: 25,
-                  fats: 8,
+                  proteins: 15.0,
+                  carbs: 25.0,
+                  fats: 8.0,
                   time: "Déjeuner",
                 ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Repas ajouté !")),
               );
             },
             child: const Icon(Icons.add, color: Colors.orange, size: 20),

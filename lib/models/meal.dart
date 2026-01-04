@@ -1,9 +1,9 @@
 class Meal {
   final String name;
   final int calories;
-  final int proteins;
-  final int carbs;
-  final int fats;
+  final double proteins;
+  final double carbs;
+  final double fats;
   final String time; // petit-dej,déjeuner,diner
 
 
