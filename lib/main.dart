@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_screen.dart';
 import 'food_log_screen.dart';
-import 'scanner_screen.dart';
+import 'package:projet_flutter/scanner.dart';
 import 'analytics.dart';
 import 'profile.dart';
 import 'providers/food_provider.dart';
